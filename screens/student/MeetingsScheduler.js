@@ -7,7 +7,7 @@ import 'intl/locale-data/jsonp/en';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CoursePicker from '../../components/pickers/coursePicker'
-import { scheduleLesson } from '../../store/actions/data/studentData'
+import * as LessonsActions from '../../store/actions/lessons'
 
 
 const ScheduleMeeting = props => {
@@ -42,7 +42,7 @@ const ScheduleMeeting = props => {
         }
 
         try {
-            await dispatch(scheduleLesson(updatedLessons, tutorData, lessonDate, lessonTime, selectedCourse))
+            await dispatch(LessonsActions.addLesson({ tutorId: tutorData.uid, studentId: user.uid, date: lessonDate, time: lessonTime }))
             await setLessons(updatedLessons)
         } catch (err) {
             Alert.alert('An Error occured!', err, [{ text: 'Okay' }])
@@ -58,7 +58,6 @@ const ScheduleMeeting = props => {
 
 
     useEffect(() => {
-        // console.log(lessonDate)
     }, [setLessons, scheduleLesson, scheduleLessonHandler])
 
 
